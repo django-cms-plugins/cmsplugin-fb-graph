@@ -5,8 +5,8 @@
 <img src="{{ event.pic }}" alt="{{ event.name }}" />
     <h3>{{ event.name}}</h3>
     <p>Start: {{ event.start_time }}</p>
-    <div class="event_description">{{ event.description }}</div>
-    <pre>{{event}}</pre>
+    <p class="event_location">Location: {{ event.location }}</p>
+    <div class="event_description">{{ event.description|linebreaks }}</div>
 </li>
 {% endfor %}
 </ul>
