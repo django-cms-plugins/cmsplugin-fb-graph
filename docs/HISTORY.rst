@@ -6,6 +6,7 @@ Changelog
 
 * Add count field to the plugin to control how many events will be
   displayed.
+* Add Basque translation
 
 
 0.1 - 2013/02/06
