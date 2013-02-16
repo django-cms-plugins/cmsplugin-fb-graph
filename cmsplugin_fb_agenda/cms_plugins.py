@@ -18,7 +18,12 @@ class CMSFBAgendaPlugin(CMSPluginBase):
         auth_token = facebook.get_app_access_token(settings.FACEBOOK_APP_ID,
                                                    settings.FACEBOOK_APP_SECRET)
         graph = facebook.GraphAPI(auth_token)
-        query = graph.fql(settings.EVENTS_FQL % instance.user_id)
+        if instance.count > 0:
+            limit = ' limit %s' % instance.count
+        else:
+            limit = ''
+        fql = settings.EVENTS_FQL + limit
+        query = graph.fql(fql % instance.user_id)
         return query
 
     def render(self, context, instance, placeholder):
