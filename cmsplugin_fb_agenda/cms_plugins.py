@@ -1,3 +1,5 @@
+from urllib2 import URLError
+
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django.utils.translation import ugettext_lazy as _
@@ -15,16 +17,20 @@ class CMSFBAgendaPlugin(CMSPluginBase):
     render_template = 'cmsplugin_fb_agenda/agenda.html'
 
     def get_facebook_data(self, instance):
-        auth_token = facebook.get_app_access_token(settings.FACEBOOK_APP_ID,
-                                                   settings.FACEBOOK_APP_SECRET)
-        graph = facebook.GraphAPI(auth_token)
-        if instance.count > 0:
-            limit = ' limit %s' % instance.count
-        else:
-            limit = ''
-        fql = settings.EVENTS_FQL + limit
-        query = graph.fql(fql % instance.user_id)
-        return query
+        try:
+            auth_token = facebook.get_app_access_token(settings.FACEBOOK_APP_ID,
+                                                       settings.FACEBOOK_APP_SECRET)
+            graph = facebook.GraphAPI(auth_token)
+            if instance.count > 0:
+                limit = ' limit %s' % instance.count
+            else:
+                limit = ''
+            fql = settings.EVENTS_FQL + limit
+            query = graph.fql(fql % instance.user_id)
+            return query
+        except URLError:
+            # Can't access facebook, return an empty response
+            return []
 
     def render(self, context, instance, placeholder):
         context.update({
