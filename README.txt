@@ -1,4 +1,10 @@
 Introduction
 ============
 
-This django-cms plugin shows the agenda of a given user_id.
+Currently two plugins are available:
+
+Agenda
+    Shows the agenda of the given user id
+
+News
+    Shows the wall posts of the given user id

@@ -40,7 +40,7 @@ class CMSFBAgendaPlugin(CMSFBPlugin):
 
     model = models.FBAgendaPlugin
     name = _('Facebook agenda')
-    render_template = 'cmsplugin_fb_agenda/agenda.html'
+    render_template = 'cmsplugin_fb_graph/agenda.html'
     fql = settings.EVENTS_FQL
 
 
@@ -48,7 +48,7 @@ class CMSFBNewsPlugin(CMSFBPlugin):
 
     model = models.FBNewsPlugin
     name = _('Facebook news')
-    render_template = 'cmsplugin_fb_agenda/news.html'
+    render_template = 'cmsplugin_fb_graph/news.html'
     fql = settings.NEWS_FQL
 
     def get_facebook_data(self, instance, fql):

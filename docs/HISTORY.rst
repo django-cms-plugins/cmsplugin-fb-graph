@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.3 - 2013/02/20
+----------------
+
+* Add one more plugin: Facebook News shows the wall posts of the given
+  user_id
+* Rename the project as now its more generic
+
 0.2 - 2013/02/16
 ----------------
 

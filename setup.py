@@ -3,9 +3,9 @@ import os
 
 version = '0.2'
 
-setup(name='cmsplugin-fb-agenda',
+setup(name='cmsplugin-fb-graph',
       version=version,
-      description="django-cms plugin: display the agenda of a facebook user",
+      description="several django-cms plugins using facebook graph api.",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.rst")).read(),
       # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -15,7 +15,7 @@ setup(name='cmsplugin-fb-agenda',
       ],
       author='GISA Elkartea',
       author_email='kontaktua@gisa-elkartea.org',
-      url='http://lagunak.gisa-elkartea.org/projects/cmplugin-fb-agenda',
+      url='http://lagunak.gisa-elkartea.org/projects/cmplugin-fb-graph',
       license='GPL',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
