@@ -10,13 +10,9 @@ import models
 import settings
 
 
-class CMSFBAgendaPlugin(CMSPluginBase):
+class CMSFBPlugin(CMSPluginBase):
 
-    model = models.FBAgendaPlugin
-    name = _('Facebook agenda')
-    render_template = 'cmsplugin_fb_agenda/agenda.html'
-
-    def get_facebook_data(self, instance):
+    def get_facebook_data(self, instance, fql):
         try:
             auth_token = facebook.get_app_access_token(settings.FACEBOOK_APP_ID,
                                                        settings.FACEBOOK_APP_SECRET)
@@ -25,8 +21,8 @@ class CMSFBAgendaPlugin(CMSPluginBase):
                 limit = ' limit %s' % instance.count
             else:
                 limit = ''
-            fql = settings.EVENTS_FQL + limit
-            query = graph.fql(fql % instance.user_id)
+            fql += limit
+            query = graph.fql(fql % {'uid': instance.user_id})
             return query
         except URLError:
             # Can't access facebook, return an empty response
@@ -34,10 +30,30 @@ class CMSFBAgendaPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context.update({
-            'events': self.get_facebook_data(instance),
+            'items': self.get_facebook_data(instance, self.fql),
             'instance': instance,
         })
         return context
 
 
+class CMSFBAgendaPlugin(CMSFBPlugin):
+
+    model = models.FBAgendaPlugin
+    name = _('Facebook agenda')
+    render_template = 'cmsplugin_fb_agenda/agenda.html'
+    fql = settings.EVENTS_FQL
+
+
+class CMSFBNewsPlugin(CMSFBPlugin):
+
+    model = models.FBNewsPlugin
+    name = _('Facebook news')
+    render_template = 'cmsplugin_fb_agenda/news.html'
+    fql = settings.NEWS_FQL
+
+    def get_facebook_data(self, instance, fql):
+        data = super(CMSFBNewsPlugin, self).get_facebook_data(instance, fql)
+        return [elem for elem in data if elem['message']]
+
 plugin_pool.register_plugin(CMSFBAgendaPlugin)
+plugin_pool.register_plugin(CMSFBNewsPlugin)

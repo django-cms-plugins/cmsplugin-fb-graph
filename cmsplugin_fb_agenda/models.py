@@ -10,3 +10,12 @@ class FBAgendaPlugin(CMSPlugin):
 
     def __unicode__(self):
         return _(u'fb agenda for %(user_id)s') % {'user_id': self.user_id}
+
+
+class FBNewsPlugin(CMSPlugin):
+
+    user_id = models.CharField(max_length=32)
+    count = models.IntegerField(default=0, help_text=_("How many news must be displayed. Set to 0 to display all"))
+
+    def __unicode__(self):
+        return _(u'fb news for %(user_id)s') % {'user_id': self.user_id}
